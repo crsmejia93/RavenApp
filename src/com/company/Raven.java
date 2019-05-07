@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Raven {
     private String [] positive = {"good", "glad", "happy", "relaxed", "accomplished", "alert", "creative"};
     private String [] negative = {"bad", "sad", "tired", "angry", "anxious", "hungry", "moody", "afraid"};
-    private String answer="", reply ="";
+    private String answer="";
     private int posCounter, negCounter;
     private ChatHistory chatHistory = new ChatHistory();
 
@@ -20,11 +20,19 @@ public class Raven {
             if(!answer.equalsIgnoreCase("q")){
                 checkWordCount(answer);//this will check for number of positive and negative words
                 if(posCounter>negCounter){
-                    System.out.println(getPostiveResponse());
+                    if(posCounter > 3){
+                        System.out.println(getMehResponse());
+                    }else{
+                        System.out.println(getPostiveResponse());
+                    }
                 }else if(posCounter == negCounter){
                     System.out.println(getMehResponse());
                 }else if(posCounter<negCounter){
-                    System.out.println(getNegativeResponse());
+                    if(negCounter>3){
+                        System.out.println(getPostiveResponse());
+                    }else{
+                        System.out.println(getNegativeResponse());
+                    }
                 }
             }
         }
@@ -33,8 +41,6 @@ public class Raven {
 
 
     public void checkWordCount(String answer){
-        posCounter = 0;
-        negCounter=0;
         //this would check through every word in the answer provided by the user
         //and compare it to the arrays of positive or negative
         String[] strArr = answer.split(" ");
@@ -53,11 +59,11 @@ public class Raven {
     }
 
     private String getPostiveResponse() {
-        int randOption = (int)(1+Math.random()*3);
+        int randOption = (int)(1+Math.random()*4);
         String rStr="";
         switch (randOption){
             case 1:
-                rStr = "Great to hear! I am too!";
+                rStr = "Great to hear!";
                 break;
             case 2:
                 rStr = "I am so happy for you!";
@@ -65,13 +71,16 @@ public class Raven {
             case 3:
                 rStr = "That's great! What do you feel like doing today?";
                 break;
+            case 4:
+                rStr = "What are you doing today?";
+                break;
         }
         chatHistory.addHistory("Raven: "+rStr);
         return rStr;
     }
 
     private String getMehResponse() {
-        int randOption = (int)(1+Math.random()*3);
+        int randOption = (int)(1+Math.random()*6);
         String rStr="";
         switch (randOption){
             case 1:
@@ -82,6 +91,15 @@ public class Raven {
                 break;
             case 3:
                 rStr = "Do you want a cookie?";
+                break;
+            case 4:
+                rStr = "Are we done here?";
+                break;
+            case 5:
+                rStr = "Alright, I'm going to sleep.";
+                break;
+            case 6:
+                rStr = "[Puts headphones on]";
                 break;
         }
         chatHistory.addHistory("Raven: "+rStr);
